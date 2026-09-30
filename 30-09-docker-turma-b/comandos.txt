@@ -1,0 +1,110 @@
+DOCKER EM SALA - TURMA B - 30/09/2026
+
+1. Verificação do Docker
+
+Comando:
+docker info
+
+Resultado:
+Docker funcionando com Client e Server.
+
+
+2. Definição do caminho da pasta site
+
+Comando:
+$pastaSite = (Resolve-Path .\site).Path
+
+
+3. Criação do container na porta 8081
+
+Comando:
+docker run -d --name docker-b -p 127.0.0.1:8081:80 --mount "type=bind,source=$pastaSite,target=/usr/share/nginx/html,readonly" nginx:alpine
+
+Resultado:
+Imagem nginx:alpine baixada e container docker-b criado.
+
+
+4. Verificação do container
+
+Comando:
+docker ps
+
+Resultado:
+Container docker-b em execução.
+Porta:
+127.0.0.1:8081->80/tcp
+
+
+5. Atualização do HTML
+
+Alterações realizadas no site/index.html:
+- "Catálogo inicial" alterado para "Catálogo revisado".
+- Ferramenta "Consulta de CEP" adicionada.
+- Descrição da ferramenta atualizada.
+
+A página foi atualizada no navegador sem recriar o container.
+
+
+6. Parada e remoção do primeiro container
+
+Comando:
+docker stop docker-b
+
+Resultado:
+docker-b
+
+Comando:
+docker rm docker-b
+
+Resultado:
+docker-b
+
+
+7. Criação do container na porta 8091
+
+Comando:
+$pastaSite = (Resolve-Path .\site).Path
+
+Comando:
+docker run -d --name docker-b -p 127.0.0.1:8091:80 --mount "type=bind,source=$pastaSite,target=/usr/share/nginx/html,readonly" nginx:alpine
+
+Resultado:
+Container docker-b criado e executando na porta 8091.
+
+
+8. Verificação da porta 8091
+
+Comando:
+docker ps
+
+Resultado:
+127.0.0.1:8091->80/tcp
+docker-b
+
+
+9. Parada final do container
+
+Comando:
+docker stop docker-b
+
+Resultado:
+docker-b
+
+
+10. Verificação do estado final
+
+Comando:
+docker inspect --format '{{.State.Status}}' docker-b
+
+Resultado:
+exited
+
+
+11. Listagem final do container
+
+Comando:
+docker ps -a --filter name=docker-b
+
+Resultado:
+docker-b
+Status: Exited (0)
